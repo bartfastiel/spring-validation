@@ -15,7 +15,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({BindException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    Map<String, Object> handleException(BindException e) {
-        return Map.of("reason", e.getMessage());
+    ErrorMessage handleException(BindException e) {
+        return new ErrorMessage(
+                e.getMessage()
+        );
     }
 }

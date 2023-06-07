@@ -21,7 +21,7 @@ public class PersonController {
 
     @ExceptionHandler({IllegalStateException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    Map<String, Object> handleIllegalStateException(IllegalStateException e) {
-        return Map.of("reason", e.getMessage());
+    ErrorMessage handleIllegalStateException(IllegalStateException e) {
+        return new ErrorMessage(e.getMessage());
     }
 }
