@@ -13,12 +13,15 @@ public class PersonController {
 
     @PutMapping
     Person putPerson(@RequestBody @Valid Person person) {
+        if (person.firstname().equalsIgnoreCase("Pumuckl")) {
+            throw new IllegalStateException("Darf nicht rein");
+        }
         return person;
     }
 
-    @ExceptionHandler({BindException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    Map<String, Object> handleException() {
-        return Map.of("reason", "Invalid input");
+    @ExceptionHandler({IllegalStateException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    Map<String, Object> handleIllegalStateException(IllegalStateException e) {
+        return Map.of("reason", e.getMessage());
     }
 }
